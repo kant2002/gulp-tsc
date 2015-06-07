@@ -64,12 +64,12 @@ See [Error handling](#error-handling) for details.
 
 #### options.module
 Type: `String` (`"commonjs"` or `"amd"`)
-Default: `"commonjs"`
+Default: `null` (if `options.target` is `"ES6"`), or `"commonjs"` (otherwise)
 
 `--module` option for `tsc` command.
 
 #### options.target
-Type: `String` (`"ES3"` or `"ES5"`)
+Type: `String` (`"ES3"`, `"ES5"`, or `"ES6"`)
 Default: `"ES3"`
 
 `--target` option for `tsc` command.
