@@ -115,6 +115,12 @@ Default: `false`
 
 `--allowimportmodule` option for `tsc` command. (version 0.9.1.1)
 
+#### options.emitDecoratorMetadata
+Type: `Boolean`
+Default: `false`
+
+`--emitDecoratorMetadata` option for `tsc` command.
+
 #### options.declaration
 Type: `Boolean`
 Default: `false`
