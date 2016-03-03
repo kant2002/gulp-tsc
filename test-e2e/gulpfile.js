@@ -32,9 +32,9 @@ gulp.task('version', function (cb) {
 
 gulp.task('clean', ['version'], function (cb) {
     del([
-        'build',
+        'build/**',
         'src-inplace/**/*.js',
-    ], cb);
+    ]).then(cb, null);
 });
 
 gulp.task('all', ['clean'], function (cb) {
@@ -54,6 +54,11 @@ gulp.task('test1', ['clean'], function () {
 
 // Compiling multiple files
 gulp.task('test2', ['clean'], function () {
+    console.log(expect([
+      'build/test2/foo.js',
+      'build/test2/sum.js',
+      'build/test2/calc.js'
+    ]));
   return gulp.src('src/*.ts')
     .pipe(typescript()).on('error', abort)
     .pipe(gulp.dest('build/test2'))

@@ -64,14 +64,14 @@ See [Error handling](#error-handling) for details.
 
 #### options.module
 Type: `String` (`"commonjs"`, `"amd"`, `"system"` or `"umd"`)
-Default: `null` (if `options.target` is `"ES6"`), or `"commonjs"` (otherwise)
+Default: `null` (if `options.target` is `"ES6"` or `"ES2015"`), or `"commonjs"` (otherwise)
 
 The `"system"` and `"umd"` module options available only when using TypeScript 1.5
 
 `--module` option for `tsc` command.
 
 #### options.target
-Type: `String` (`"ES3"`, `"ES5"`, or `"ES6"`)
+Type: `String` (`"ES3"`, `"ES5"`, `"ES6"` or `"ES2015"`)
 Default: `"ES3"`
 
 `--target` option for `tsc` command.
@@ -165,6 +165,68 @@ Default: `false`
 
 Do not emit comments to output.
 
+#### options.allowJs
+Type: `Boolean`
+Default: `false`
+
+`--allowJs` option for `tsc` command. (at least version 1.8)
+
+#### options.allowUnreachableCode
+Type: `Boolean`
+Default: `false`
+
+`--allowUnusedLabels` option for `tsc` command. (at least version 1.8)
+
+Allows unreachable code.
+
+#### options.allowUnusedLabels
+Type: `Boolean`
+Default: `false`
+
+`--allowUnusedLabels` option for `tsc` command. (at least version 1.8)
+
+Allows specify unused labels in the source code.
+
+#### options.noImplicitReturns
+Type: `Boolean`
+Default: `false`
+
+`--noImplicitReturns` option for `tsc` command. (at least version 1.8)
+
+Disallow implicit returns from the functions.
+
+#### options.noFallthroughCasesInSwitch
+Type: `Boolean`
+Default: `false`
+
+`--noFallthroughCasesInSwitch` option for `tsc` command. (at least version 1.8)
+
+Disallow fallthrough cases in switch statement.
+
+#### options.allowSyntheticDefaultImports
+Type: `Boolean`
+Default: `false`
+
+`--allowSyntheticDefaultImports` option for `tsc` command. (at least version 1.8)
+
+Indicates that the module loader performs some kind of synthetic default import member creation not indicated in the imported .ts or .d.ts.
+
+#### options.jsx
+Type: `Boolean`
+Default: `false`
+
+`--jsx` option for `tsc` command. (at least version 1.6)
+
+Support for React.
+
+#### options.reactNamespace
+Type: `Boolean`
+Default: `false`
+
+`--reactNamespace` option for `tsc` command. (at least version 1.6)
+
+Allow specify namespace name for JSX factory.
+
 #### options.sourceMap
 Type: `Boolean`
 Default: `false`
@@ -182,6 +244,14 @@ Default: `false`
 `--suppressImplicitAnyIndexErrors` option for `tsc` command. (Starting from TSC version 1.5)
 
 Suppress noImplicitAny errors for indexing objects lacking index signatures.
+
+#### options.reactNamespace
+Type: `Boolean`
+Default: `false`
+
+`--reactNamespace` option for `tsc` command. (at least version 1.8)
+
+Disallow fallthrough cases in switch statement.
 
 #### options.tmpDir
 Type: `String`
