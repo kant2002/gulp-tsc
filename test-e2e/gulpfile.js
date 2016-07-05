@@ -7,6 +7,7 @@ var del = require('del');
 var typescript = require('../index');
 var tsc = require('../lib/tsc');
 var expectFile = require('gulp-expect-file');
+var versionCompare = require('node-version-compare');
 
 var expect = function (files) {
   return expectFile({ checkRealFile: true, errorOnFailure: true, verbose: true }, files);
@@ -17,16 +18,20 @@ var ignore = function (err) { };
 var currentVersion = 'INVALID';
 
 var isVersionGte150 = function (version) {
-    return version.indexOf('1.5.') === 0;
+    version = version.substring(0, 3);
+    console.log(version, versionCompare(version, "1.5"));
+    return versionCompare(version, "1.5") >= 0;
 }
 
 gulp.task('default', ['version', 'all']);
 
 gulp.task('version', function (cb) {
     tsc.version(function (err, data) {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
         currentVersion = data;
-        cb();
+        cb(null);
     });
 });
 
@@ -34,7 +39,9 @@ gulp.task('clean', ['version'], function (cb) {
     del([
         'build/**',
         'src-inplace/**/*.js',
-    ]).then(cb, null);
+    ]).then(function (paths) {
+      cb(null);
+    }, null);
 });
 
 gulp.task('all', ['clean'], function (cb) {
@@ -86,7 +93,7 @@ gulp.task('test3', ['clean'], function () {
 // Compiling multiple files into one file
 gulp.task('test4', ['clean'], function () {
   return gulp.src('src/*.ts')
-    .pipe(typescript({ out: 'test4.js' })).on('error', abort)
+    .pipe(typescript({ module: 'amd', out: 'test4.js' })).on('error', abort)
     .pipe(gulp.dest('build/test4'))
     .pipe(expect('build/test4/test4.js'));
 });
@@ -97,8 +104,7 @@ gulp.task('test5', ['clean'], function () {
     .pipe(typescript()).on('error', ignore)
     .pipe(gulp.dest('build/test5'))
     .pipe(!isVersionGte150(currentVersion)
-          ? expect([]) : expect(['build/test5/error.js'])
-         );
+          ? expect([]) : expect('build/test5/error.js'));
 });
 
 // Compiling warns some errors but outputs a file
@@ -123,7 +129,7 @@ gulp.task('test7', ['clean'], function () {
 // Compiling files including .d.ts file into one
 gulp.task('test8', ['clean'], function () {
   return gulp.src('src-d/*.ts')
-    .pipe(typescript({ out: 'unified.js' })).on('error', abort)
+    .pipe(typescript({ module: 'amd', out: 'unified.js' })).on('error', abort)
     .pipe(gulp.dest('build/test8'))
     .pipe(expect('build/test8/unified.js'))
 });
@@ -177,7 +183,7 @@ gulp.task('test12', ['clean'], function () {
 // Compiling sourcemap files into one file
 gulp.task('test13', ['clean'], function () {
   return gulp.src('src-crossproj/proj-a/main.ts')
-    .pipe(typescript({ sourcemap: true, sourceRoot: '/', out: 'unified.js' })).on('error', abort)
+    .pipe(typescript({ module: 'amd', sourcemap: true, sourceRoot: '/', out: 'unified.js' })).on('error', abort)
     .pipe(gulp.dest('build/test13'))
     .pipe(expect({
       'build/test13/unified.js':     true,
@@ -276,7 +282,7 @@ gulp.task('test18', ['clean'], function () {
 // Compile files in nested directory into one file
 gulp.task('test19', ['clean'], function () {
   return gulp.src('src-inplace/*/*.ts')
-    .pipe(typescript({ sourcemap: true, outDir: 'build/test19', out: 'test19.js' })).on('error', abort)
+    .pipe(typescript({ module: 'amd', sourcemap: true, outDir: 'build/test19', out: 'test19.js' })).on('error', abort)
     .pipe(gulp.dest('build/test19'))
     .pipe(expect({
       'build/test19/test19.js':     true,
