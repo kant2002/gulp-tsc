@@ -22,7 +22,7 @@ gulp.task('compile', function(){
 ```
 
 ## Supported TSC versions
-All versions starting from 0.9.1, up to 1.6.3.
+All versions starting from 0.9.1, up to 1.8.10.
 
 ## API
 
