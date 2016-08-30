@@ -165,6 +165,22 @@ Default: `false`
 
 Do not emit comments to output.
 
+#### options.project
+Type: `String`
+Default: `null`
+
+`--project` option for `tsc` command.
+
+Compile the project in the given directory.
+
+#### options.moduleResolution
+Type: `String`
+Default: `null`
+
+`--moduleResolution` option for `tsc` command.
+
+Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6).
+
 #### options.allowJs
 Type: `Boolean`
 Default: `false`
