@@ -1,6 +1,6 @@
 {
   "name": "gulp-tsc",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "author": "Kota Saito <kotas.nico@gmail.com> (https://github.com/kotas)",
   "copyright": "2014 Kota Saito",
   "contributors": [
@@ -53,7 +53,7 @@
     "should": "^7.1.0",
     "sinon": "^1.9.0"
   },
-  "optionalDependencies": {
-    "typescript": "^1.0.1"
+  "peerDependencies": {
+    "typescript": ">=1.0.1 || 2.x"
   }
 }
