@@ -4,7 +4,8 @@
   "author": "Kota Saito <kotas.nico@gmail.com> (https://github.com/kotas)",
   "copyright": "2014 Kota Saito",
   "contributors": [
-    "Cai Lei (https://github.com/ccll)"
+    "Cai Lei (https://github.com/ccll)",
+    "Andrey Kurdyumov <kant2002@gmail.com>"
   ],
   "description": "TypeScript compiler for gulp.js",
   "license": "MIT",
