@@ -203,6 +203,13 @@ Default: `false`
 
 Allows specify unused labels in the source code.
 
+#### options.baseUrl
+Type: `String`
+
+`--baseUrl` option for `tsc` command. (at least version 1.8)
+
+Base directory to resolve non-absolute module names.
+
 #### options.noImplicitReturns
 Type: `Boolean`
 Default: `false`
