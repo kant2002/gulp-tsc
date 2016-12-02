@@ -235,12 +235,12 @@ Default: `false`
 Indicates that the module loader performs some kind of synthetic default import member creation not indicated in the imported .ts or .d.ts.
 
 #### options.jsx
-Type: `Boolean`
-Default: `false`
+Type: `String`
+Default: `null`
 
-`--jsx` option for `tsc` command. (at least version 1.6)
+`--jsx` option for `tsc` command.
 
-Support for React.
+Enable React support. (Starting from TSC version 1.6)
 
 #### options.reactNamespace
 Type: `Boolean`
@@ -391,15 +391,6 @@ Default: `false`
 `--experimentalDecorators` option for `tsc` command.
 
 Enable experimental Decorator support. (Starting from TSC version 1.5)
-
-
-#### options.jsx
-Type: `String`
-Default: `null`
-
-`--jsx` option for `tsc` command.
-
-Enable React support. (Starting from TSC version 1.6)
 
 #### options.additionalTscParameters
 Type: Array of string
