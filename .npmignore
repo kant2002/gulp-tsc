@@ -4,3 +4,4 @@
 test/
 test-e2e/
 .DS_Store
+src/

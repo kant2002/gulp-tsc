@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+      "allowJs": true,
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": false,
+    "sourceMap": false,
+    "module": "commonjs",
+    "outDir": "lib/",
+    "target": "es5",
+    "types": [ ],
+    "lib": [
+      "es5",
+      "dom",
+      "es2015.core",
+      "es2015.promise",
+      "es2015.symbol",
+      "es2015.iterable"
+    ]
+  },
+  "typeAcquisition": {"enable": true},
+  "compileOnSave": true,
+  "files": [
+    "src/compiler.js",
+    "src/shellescape.js",
+    "src/tsc.js"
+  ]
+}
