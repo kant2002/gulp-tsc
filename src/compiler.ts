@@ -1,6 +1,5 @@
 'use strict';
 
-var tsc = require('./tsc');
 var fs = require('fs');
 var path = require('path');
 var util = require('util');
@@ -13,6 +12,7 @@ var through = require('through2');
 var fsSrc = require('vinyl-fs').src;
 var EventEmitter = require('events').EventEmitter;
 var versionCompare = require('node-version-compare');
+import * as tsc from "./tsc";
 
 interface GulpTsCompilerOptions {
     tscPath?: string;
@@ -93,7 +93,7 @@ interface GulpTsCompilerOptions {
     allowimportmodule?: boolean;
 }
 
-function Compiler(sourceFiles, options: GulpTsCompilerOptions) {
+function Compiler(sourceFiles: string | string[], options: GulpTsCompilerOptions) {
     EventEmitter.call(this);
     
     this.sourceFiles = sourceFiles || [];
@@ -229,6 +229,12 @@ Compiler.prototype.buildTscArguments = function (version) {
 
     if (this.options.moduleResolution && versionCompare(version, "1.6") >= 0) {
         args.push('--moduleResolution', this.options.moduleResolution);
+    }
+
+    if (this.options.lib && versionCompare(version, "1.8") >= 0) {
+        for (let libName of this.options.lib) {
+            args.push('--lib', libName);
+        }
     }
 
     if (this.options.project && versionCompare(version, "1.6") >= 0) {

@@ -30,7 +30,7 @@
   "compileOnSave": true,
   "files": [
     "src/compiler.ts",
-    "src/shellescape.js",
-    "src/tsc.js"
+    "src/shellescape.ts",
+    "src/tsc.ts"
   ]
 }

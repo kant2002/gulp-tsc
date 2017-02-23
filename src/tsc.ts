@@ -6,9 +6,11 @@ var fs = require('fs');
 var child_process = require('child_process');
 var resolve = require('resolve');
 var which = require('which');
-var shellescape = require('./shellescape');
+import { shellescape } from "./shellescape";
 
-function exec(args, options, callback) {
+export type SearchLocations = 'cwd' | 'bundle' | 'shell';
+
+export function exec(args: string | string[] | null, options?: any, callback?: Function) {
     if (!callback && typeof options === 'function') {
         callback = options;
         options = {};
@@ -20,8 +22,8 @@ function exec(args, options, callback) {
     }
 
     options = options || {};
-    var tscPath = options.path;
-        if (!tscPath) {
+    let tscPath = options.path;
+    if (!tscPath) {
         try {
             tscPath = find(options.search);
         } catch (e) {
@@ -29,8 +31,8 @@ function exec(args, options, callback) {
         }
     }
 
-    var exe = /(\.exe|\.cmd)$/i.test(tscPath);
-    var command = shellescape(exe ? [tscPath] : [process.execPath, tscPath]);
+    const exe = /(\.exe|\.cmd)$/i.test(tscPath);
+    let command = shellescape(exe ? [tscPath] : [process.execPath, tscPath]);
     if (args && args.length > 0) {
         command += ' ' + (Array.isArray(args) ? shellescape(args) : args);
     }
@@ -38,7 +40,7 @@ function exec(args, options, callback) {
     return child_process.exec(command, options, callback);
 }
 
-function versionParser(callback) {
+export function versionParser(callback: (err: Error | null, version: string | null) => void) {
     return function (stdout, stderr) {
         if (!stdout) {
             callback(null, null);
@@ -51,20 +53,17 @@ function versionParser(callback) {
             return;
         }
 
-        // versionMatch = stdout.match(/Version (\d+\.\d+\.\d+((\.\d+)|(-alpha)))/);
-        // version = version && version[1];
-
         callback(null, null);
     };
 }
 
-function version(options, callback) {
+export function version(options, callback) {
     if (!callback && typeof options === 'function') {
         callback = options;
         options = {};
     }
 
-    return exec('-v', options, function (err, stdout, stderr) {
+    return exec('-v', options, function (err: Error | null, stdout, stderr) {
         if (err) {
             return callback(err, null);
         }
@@ -74,7 +73,7 @@ function version(options, callback) {
     });
 }
 
-function find(places) {
+export function find(places: SearchLocations[]) {
     places = places || ['cwd', 'bundle', 'shell'];
     for (var i = 0; i < places.length; i++) {
         var fn = searchFunctions[places[i]];
@@ -116,11 +115,3 @@ var searchFunctions = {
         }
     }
 };
-
-module.exports = {
-    exec: exec,
-    version: version,
-    find: find,
-    versionParser: versionParser
-}
-

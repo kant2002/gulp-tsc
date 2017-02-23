@@ -1,6 +1,6 @@
 'use strict';
 
-function shellescape(arg) {
+export function shellescape(arg: string | string[]): string {
     if (Array.isArray(arg)) {
         return arg.map(shellescape).join(" ");
     } else {
@@ -11,5 +11,3 @@ function shellescape(arg) {
         }
     }
 }
-
-module.exports = shellescape;
