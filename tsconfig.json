@@ -7,10 +7,10 @@
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "removeComments": false,
     "sourceMap": false,
     "module": "commonjs",
@@ -29,7 +29,7 @@
   "typeAcquisition": {"enable": true},
   "compileOnSave": true,
   "files": [
-    "src/compiler.js",
+    "src/compiler.ts",
     "src/shellescape.js",
     "src/tsc.js"
   ]

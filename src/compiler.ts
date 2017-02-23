@@ -14,7 +14,86 @@ var fsSrc = require('vinyl-fs').src;
 var EventEmitter = require('events').EventEmitter;
 var versionCompare = require('node-version-compare');
 
-function Compiler(sourceFiles, options) {
+interface GulpTsCompilerOptions {
+    tscPath?: string;
+    tscSearch?: string;
+    tmpDir?: string;
+    keepTree: boolean;
+    pathFilter?: any;
+    safe?: boolean;
+    stripInternal?: boolean;
+    listFiles?: boolean;
+    additionalTscParameters: any[];
+
+    allowJs?: boolean;
+    allowSyntheticDefaultImports?: boolean;
+    allowUnreachableCode?: boolean;
+    allowUnusedLabels?: boolean;
+    alwaysStrict?: boolean;
+    baseUrl?: string;
+    charset?: string;
+    declaration?: boolean;
+    declarationDir?: string;
+    disableSizeLimit?: boolean;
+    emitBOM?: boolean;
+    emitDecoratorMetadata?: boolean;
+    experimentalDecorators?: boolean;
+    forceConsistentCasingInFileNames?: boolean;
+    importHelpers?: boolean;
+    inlineSourceMap?: boolean;
+    inlineSources?: boolean;
+    isolatedModules?: boolean;
+    jsx?: "preserve" | "react" | "react-native";
+    lib?: string[];
+    locale?: string;
+    mapRoot?: string;
+    maxNodeModuleJsDepth?: number;
+    module?: "commonjs" | "amd" | "system" | "umd" | "es2015";
+    moduleResolution?: "classic" | "node";
+    newLine?: "CRLF" | "LF";
+    noEmit?: boolean;
+    noEmitHelpers?: boolean;
+    noEmitOnError?: boolean;
+    noErrorTruncation?: boolean;
+    noFallthroughCasesInSwitch?: boolean;
+    noImplicitAny?: boolean;
+    noImplicitReturns?: boolean;
+    noImplicitThis?: boolean;
+    noUnusedLocals?: boolean;
+    noUnusedParameters?: boolean;
+    noImplicitUseStrict?: boolean;
+    noLib?: boolean;
+    noResolve?: boolean;
+    out?: string;
+    outDir?: string;
+    outFile?: string;
+    paths?: any;
+    preserveConstEnums?: boolean;
+    project?: string;
+    reactNamespace?: string;
+    jsxFactory?: string;
+    removeComments?: boolean;
+    rootDir?: string;
+    rootDirs?: string[];
+    skipLibCheck?: boolean;
+    skipDefaultLibCheck?: boolean;
+    sourceMap?: boolean;
+    sourceRoot?: string;
+    strictNullChecks?: boolean;
+    suppressExcessPropertyErrors?: boolean;
+    suppressImplicitAnyIndexErrors?: boolean;
+    target?: "ES3" | "ES5" | "ES6" | "ES2015" | "ES2016" | "ES2017" | "ESNext";
+    traceResolution?: boolean;
+    types?: string[];
+    /** Paths used to compute primary types search locations */
+    typeRoots?: string[];
+
+    /** Obsolete properties */
+    allowbool?: boolean;
+    allowimportmodule?: boolean;
+}
+
+function Compiler(sourceFiles, options: GulpTsCompilerOptions) {
     EventEmitter.call(this);
     
     this.sourceFiles = sourceFiles || [];
@@ -74,7 +153,7 @@ function Compiler(sourceFiles, options) {
 util.inherits(Compiler, EventEmitter);
 
 Compiler.prototype.buildTscArguments = function (version) {
-  var args = [];
+  var args: string[] = [];
   if (version === undefined || version === null) {
       version = "1.5";
   }
@@ -183,7 +262,7 @@ Compiler.prototype.compile = function (callback) {
   var checkAborted = this.checkAborted.bind(this);
 
   this.emit('start');
-  Compiler._start(this);
+  (Compiler as any)._start(this);
 
   async.waterfall([
     checkAborted,
@@ -213,7 +292,7 @@ Compiler.prototype.compile = function (callback) {
 };
 
 Compiler.prototype.checkAborted = function (callback) {
-  if (Compiler.isAborted()) {
+  if ((Compiler as any).isAborted()) {
     callback(new Error('aborted'));
   } else {
     callback(null);
@@ -426,36 +505,36 @@ Compiler.prototype.cleanup = function () {
   try { fs.unlinkSync(this.treeKeeperFile); } catch(e) {}
 };
 
-Compiler.running = 0;
-Compiler.aborted = false;
-Compiler.abortCallbacks = [];
+(Compiler as any).running = 0;
+(Compiler as any).aborted = false;
+(Compiler as any).abortCallbacks = [];
 
-Compiler.abortAll = function (callback) {
-  Compiler.aborted = true;
-  callback && Compiler.abortCallbacks.push(callback);
-  if (Compiler.running == 0) {
-    Compiler._allAborted();
+(Compiler as any).abortAll = function (callback) {
+  (Compiler as any).aborted = true;
+  callback && (Compiler as any).abortCallbacks.push(callback);
+  if ((Compiler as any).running == 0) {
+    (Compiler as any)._allAborted();
   }
 };
 
-Compiler.isAborted = function () {
-  return Compiler.aborted;
+(Compiler as any).isAborted = function () {
+  return (Compiler as any).aborted;
 };
 
-Compiler._start = function (compiler) {
-  Compiler.running++;
+(Compiler as any)._start = function (compiler) {
+  (Compiler as any).running++;
   compiler.once('end', function () {
-    Compiler.running--;
-    if (Compiler.running == 0 && Compiler.aborted) {
-      Compiler._allAborted();
+    (Compiler as any).running--;
+    if ((Compiler as any).running == 0 && (Compiler as any).aborted) {
+      (Compiler as any)._allAborted();
     }
   });
 };
 
-Compiler._allAborted = function () {
-  var callbacks = Compiler.abortCallbacks;
-  Compiler.aborted = false;
-  Compiler.abortCallbacks = [];
+(Compiler as any)._allAborted = function () {
+  var callbacks = (Compiler as any).abortCallbacks;
+  (Compiler as any).aborted = false;
+  (Compiler as any).abortCallbacks = [];
   callbacks.forEach(function (fn) {
     fn.call(null);
   });
