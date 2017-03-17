@@ -243,7 +243,10 @@ Compiler.prototype.buildTscArguments = function (version) {
   if (this.options.additionalTscParameters)   this.options.additionalTscParameters.forEach(function (param) { args.push(param); });
 
   if (this.tempDestination) {
-    args.push('--outDir', this.tempDestination);
+      if (!(this.options.project && versionCompare(version, "1.6") >= 0)) {
+          args.push('--outDir', this.tempDestination);
+      }
+  
     if (this.options.out) {
       args.push('--out', path.resolve(this.tempDestination, this.options.out));
     }
@@ -251,10 +254,12 @@ Compiler.prototype.buildTscArguments = function (version) {
     args.push('--out', this.options.out);
   }
 
-  this.sourceFiles.forEach(function (f) { args.push(f.path); });
-  if (this.treeKeeperFile) {
-    args.push(this.treeKeeperFile);
-  }
+    if (!(this.options.project && versionCompare(version, "1.6") >= 0)) {
+        this.sourceFiles.forEach(function (f) { args.push(f.path); });
+        if (this.treeKeeperFile) {
+            args.push(this.treeKeeperFile);
+        }
+    }
 
   return args;
 };
