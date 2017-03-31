@@ -153,16 +153,25 @@ function Compiler(sourceFiles: string | string[], options: GulpTsCompilerOptions
 util.inherits(Compiler, EventEmitter);
 
 Compiler.prototype.buildTscArguments = function (version) {
-  var args: string[] = [];
-  if (version === undefined || version === null) {
-      version = "1.5";
-  }
+    let args: string[] = [];
+    if (version === undefined || version === null) {
+        version = "1.5";
+    }
 
-  version = version.substring(0, 3);
+    version = version.substring(0, 3);
 
-  if (this.options.module)            args.push('--module',     this.options.module.toLowerCase());
-  if (this.options.target)            args.push('--target',     this.options.target.toUpperCase());
-  if (this.options.mapRoot)           args.push('--mapRoot',    this.options.mapRoot);
+    const option: GulpTsCompilerOptions = this.options;
+    if (!option.project) {
+        if (option.module) {
+            args.push('--module', option.module.toLowerCase());
+        }
+
+        if (option.target) {
+            args.push('--target', option.target.toUpperCase());
+        }
+    }
+
+  if (this.options.mapRoot) args.push('--mapRoot', this.options.mapRoot);
   if (this.options.sourceRoot)        args.push('--sourceRoot', this.options.sourceRoot);
     if (this.options.baseUrl) {
         args.push('--baseUrl', this.options.baseUrl);
@@ -231,10 +240,9 @@ Compiler.prototype.buildTscArguments = function (version) {
         args.push('--moduleResolution', this.options.moduleResolution);
     }
 
-    if (this.options.lib && versionCompare(version, "1.8") >= 0) {
-        for (let libName of this.options.lib) {
-            args.push('--lib', libName);
-        }
+    if (option.lib && versionCompare(version, "1.8") >= 0) {
+        let param = option.lib.join(",");
+        args.push('--lib', param);
     }
 
     if (this.options.project && versionCompare(version, "1.6") >= 0) {
