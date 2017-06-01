@@ -1,10 +1,9 @@
 'use strict';
-
-var fs = require('fs');
-var path = require('path');
-var util = require('util');
-var _ = require('lodash');
-var async = require('async');
+var fs = require("fs");
+import * as path from "path";
+import * as util from "util";
+import * as _ from "lodash";
+import * as async from "async";
 var byline = require('byline');
 var temp = require('temp');
 var rimraf = require('rimraf');
@@ -243,6 +242,18 @@ Compiler.prototype.buildTscArguments = function (version) {
     if (option.lib && versionCompare(version, "1.8") >= 0) {
         let param = option.lib.join(",");
         args.push('--lib', param);
+    }
+
+    if (this.options.strict && versionCompare(version, "2.3") >= 0) {
+        args.push('--strict');
+    }
+
+    if (this.options.downlevelIteration && versionCompare(version, "2.3") >= 0) {
+        args.push('--downlevelIteration');
+    }
+
+    if (this.options.checkJs && versionCompare(version, "2.3") >= 0) {
+        args.push('--checkJs');
     }
 
     if (this.options.project && versionCompare(version, "1.6") >= 0) {
