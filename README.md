@@ -22,7 +22,7 @@ gulp.task('compile', function(){
 ```
 
 ## Supported TSC versions
-All versions starting from 0.9.1, up to 2.1.0.
+All versions starting from 0.9.1, up to 2.3.2.
 
 ## API
 
@@ -186,6 +186,24 @@ Type: `Boolean`
 Default: `false`
 
 `--allowJs` option for `tsc` command. (at least version 1.8)
+
+#### options.checkJs
+Type: `Boolean`
+Default: `false`
+
+`--checkJs` option for `tsc` command. (at least version 2.3)
+
+#### options.strict
+Type: `Boolean`
+Default: `false`
+
+`--strict` option for `tsc` command. (at least version 2.3)
+
+#### options.downlevelIteration
+Type: `Boolean`
+Default: `false`
+
+`--downlevelIteration` option for `tsc` command. (at least version 2.3)
 
 #### options.allowUnreachableCode
 Type: `Boolean`
