@@ -16,7 +16,7 @@
     "module": "commonjs",
     "outDir": "lib/",
     "target": "es5",
-    "types": [ ],
+    "types": [ "node" ],
     "lib": [
       "es5",
       "dom",

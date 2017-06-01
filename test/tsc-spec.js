@@ -1,4 +1,3 @@
-/// <reference path="../typings/mocha/mocha.d.ts"/>
 var helper = require('./helper');
 var tsc = require('../lib/tsc');
 var sinon = require('sinon');
